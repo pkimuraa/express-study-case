@@ -3,16 +3,22 @@ const express = require("express"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express");
 
-const dotenv = require("dotenv").config();
-const dburl = process.env.DB_HOST;
+  const adminRoutes = require('./routes/admin');
+  const shopRoutes = require('./routes/shop');
+/* const sqlite3 = require('sqlite3').verbose()
 
-const mongoose = require("mongoose");
 
-const router = express.Router();
+const db = require("./database.js")
+ */
+
+
+/* const mongoose = require("mongoose"); */
+
+
 
 const app = express();
 
-mongoose.connect(dburl);
+/* mongoose.connect(dburl);
 const con = mongoose.connection;
 app.use(express.json());
 try {
@@ -22,6 +28,7 @@ try {
 } catch (error) {
   console.log("Error: " + error);
 }
+ */
 
 const options = {
   definition: {
@@ -50,8 +57,13 @@ const options = {
   apis: ["./routes/*.js"],
 };
 
+
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+app.use('/admin/', adminRoutes);
+
+app.use('/shop/', shopRoutes);
 
 app.use(express.json());
 
@@ -59,13 +71,7 @@ app.use("/", (req, res, next) => {
   next();
 });
 
-app.post("/add-product", (req, res, next) => {
-  console.log(req.body);
-  res.send("<h1> response </h1>");
-});
 
-app.get("/", (req, res, next) => {
-  res.send("<h1> path: / </h1>");
-});
+
 
 app.listen(3000, () => console.log("running at 3000"));
