@@ -1,9 +1,8 @@
 const express = require('express');
-
+const Product = require('../models/product');
+const { getAllProduct } = require('../controllers/product');
 const router = express.Router();
 
-router.get("/products", (req, res, next) => {
-    res.jsonp("shop router");
-});
+router.get("/products", getAllProduct);
 
 module.exports = router;

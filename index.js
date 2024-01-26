@@ -1,7 +1,10 @@
+
+
 const express = require("express"),
   bodyParser = require("body-parser"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express");
+
 
   const adminRoutes = require('./routes/admin');
   const shopRoutes = require('./routes/shop');
@@ -56,6 +59,10 @@ const options = {
   },
   apis: ["./routes/*.js"],
 };
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 const specs = swaggerJsdoc(options);

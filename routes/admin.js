@@ -1,15 +1,16 @@
-const express = require('express');
-const Product = require('../models/product')
+const express = require("express");
+const bodyParser = require("body-parser")
+const Product = require('../models/product');
+const { addProduct } = require("../controllers/product");
+
 const router = express.Router();
 
-router.post("/add-product", (req, res, next) => {
-    const product = new Product('a', 'b ');
 
-    product.save();
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
-    res.status(200).json({message: 'success'})
 
-});
+router.post("/add-product",  addProduct);
 
 
 module.exports = router;

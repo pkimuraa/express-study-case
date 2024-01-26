@@ -15,21 +15,57 @@ module.exports = class Product {
     };
 
     async save(){
-        fs.readFile(productDbPath, 'utf8', (err, data) => {
-            if(err){
-                console.error(err);
-                return;
-            }
-
-
-            data.push({name: this.name, price: this.price, id: data.length + 1})
-            fs.writeFile(productDbPath, JSON.stringify(data), 'utf8', (err) => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(productDbPath, 'utf8', (err, data) => {
                 if(err){
-                    console.error(err);
+                    reject(err.message);
                     return;
                 }
-            })
-        });
+      
+            const productData = JSON.parse(data);
+    
+            productData.push({ id: productData.lenght + 1,name: this.name, price: this.price});
+    
+            fs.writeFile(productDbPath, JSON.stringify(productData), 'utf8', (err) => {
+                    if(err){
+                        reject(err.message);
+                        return
+                    }
+                    resolve("Data Appended")
+                })
+            });
+        })
 
+    };
+
+    static findAll(){
+        const data = fs.readFileSync(productDbPath, 'utf-8');
+
+        return JSON.parse(data);
+    };
+
+    static async deleteOne(id){
+        return new Promise((resolve, reject) => {
+            fs.readFile(productDbPath, 'utf-8,', (err, data) => {
+                if(err) {
+                    reject(err.message);
+                    return;
+                }
+
+                const productDbData = JSON.parse(data);
+
+                const newProductDbData = productDbData.filter(product => {
+                    return product.id !== id
+                })
+
+                fs.writeFile(productDbPath, JSON.stringify(newProductDbData), 'utf-8', (err, data) =>{
+                    if(err){
+                        reject(err.message);
+                        return;
+                    }
+                    resolve(newProductDbData)
+                })
+            })
+        })
     }
 };
