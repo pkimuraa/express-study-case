@@ -5,33 +5,12 @@ const express = require("express"),
   swaggerJsdoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express");
 
-
-  const adminRoutes = require('./routes/admin');
-  const shopRoutes = require('./routes/shop');
-/* const sqlite3 = require('sqlite3').verbose()
-
-
-const db = require("./database.js")
- */
-
-
-/* const mongoose = require("mongoose"); */
-
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 
 const app = express();
 
-/* mongoose.connect(dburl);
-const con = mongoose.connection;
-app.use(express.json());
-try {
-  con.on("open", () => {
-    console.log("connected");
-  });
-} catch (error) {
-  console.log("Error: " + error);
-}
- */
 
 const options = {
   definition: {
