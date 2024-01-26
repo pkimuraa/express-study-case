@@ -39,14 +39,14 @@ module.exports = class Product {
     };
 
     static findAll(){
-        const data = fs.readFileSync(productDbPath, 'utf-8');
+        const data = fs.readFileSync(productDbPath, 'utf8');
 
         return JSON.parse(data);
     };
 
     static async deleteOne(id){
         return new Promise((resolve, reject) => {
-            fs.readFile(productDbPath, 'utf-8,', (err, data) => {
+            fs.readFile(productDbPath, 'utf8', (err, data) => {
                 if(err) {
                     reject(err.message);
                     return;
@@ -58,12 +58,12 @@ module.exports = class Product {
                     return product.id !== id
                 })
 
-                fs.writeFile(productDbPath, JSON.stringify(newProductDbData), 'utf-8', (err, data) =>{
+                fs.writeFile(productDbPath, JSON.stringify(newProductDbData), 'utf8', (err) =>{
                     if(err){
                         reject(err.message);
                         return;
                     }
-                    resolve(newProductDbData)
+                    resolve(newProductDbData);
                 })
             })
         })

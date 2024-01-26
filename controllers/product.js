@@ -17,3 +17,17 @@ exports.getAllProduct = (req, res, next) => {
     const products = Product.findAll();
     res.status(200).json({products})
 }
+
+exports.deleteOne = async (req, res, next) => {
+    const id = req.params.id;
+    let result;
+    try{
+        result = await Product.deleteOne(+id);
+ 
+    } catch(err){
+        res.status(500).json({ message: err.message})
+    }
+    
+    res.status(200).json(result)
+
+}
